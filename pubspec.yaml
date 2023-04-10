@@ -40,5 +40,7 @@ flutter:
     - family: Pikolo
       fonts:
         - asset: assets/fonts/pikolo.otf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/lato.ttf
