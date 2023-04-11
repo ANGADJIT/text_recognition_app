@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:text_recognition_app/src/utils/api_endpoint_page.dart';
+import 'package:text_recognition_app/src/presentation/pages/upload_image_page.dart';
 import 'package:text_recognition_app/src/utils/strings.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class TextRecognitionApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: mainFontFamily),
-      home: APIEndpointPage(),
+      home: const UploadImagePage(),
     );
   }
 }
