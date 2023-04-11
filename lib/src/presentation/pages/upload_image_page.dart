@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:text_recognition_app/src/data/dataprovider/ocr_api.dart';
 import 'package:text_recognition_app/src/presentation/pages/detected_texts_page.dart';
 import 'package:text_recognition_app/src/presentation/widgets/custom_app_bar.dart';
 import 'package:text_recognition_app/src/utils/colors.dart';
@@ -45,11 +46,21 @@ class _UploadImagePageState extends State<UploadImagePage> {
         //
         CustomMediaQuery.makeHeight(context, .07).heightBox,
         MaterialButton(
-          onPressed: () async => {
-            CustomLoading.showLoading(context),
-            _imagePath = await _mediaManager.getImage(),
-            CustomLoading.dismiss(),
-            _navigate()
+          onPressed: () async {
+            CustomLoading.showLoading(context);
+            _imagePath = await _mediaManager.getImage();
+
+            final api = OcrAPI();
+
+            if (_imagePath != null) {
+              try {
+                api.postImage(_imagePath!);
+              } catch (e) {
+                VxToast.show(context, msg: e.toString());
+              }
+            }
+            CustomLoading.dismiss();
+            _navigate();
           },
           child: VxBox(
                   child: FaIcon(
