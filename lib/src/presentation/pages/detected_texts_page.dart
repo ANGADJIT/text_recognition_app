@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:text_recognition_app/src/presentation/widgets/custom_app_bar.dart';
 import 'package:text_recognition_app/src/presentation/widgets/text_intent_widget.dart';
