@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:text_recognition_app/src/presentation/widgets/custom_app_bar.dart';
 import 'package:text_recognition_app/src/presentation/widgets/text_intent_widget.dart';
@@ -7,37 +7,56 @@ import 'package:text_recognition_app/src/utils/enums.dart';
 import 'package:text_recognition_app/src/utils/strings.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class DetectedTextsPage extends StatelessWidget {
-  const DetectedTextsPage({Key? key, required this.imagePath})
+class DetectedTextsPage extends StatefulWidget {
+  const DetectedTextsPage(
+      {Key? key, required this.image, required this.categorizedTexts})
       : super(key: key);
-  final String imagePath;
+  final Uint8List image;
+  final Map<String, TextType> categorizedTexts;
+
+  @override
+  State<DetectedTextsPage> createState() => _DetectedTextsPageState();
+}
+
+class _DetectedTextsPageState extends State<DetectedTextsPage> {
+  final List<TextIntentWidget> _textIntents = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _generateTextIntents();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context, detectedTextsPageTitle, isSubPage: true),
-      body: VStack([
+      body: ListView(children: [
         // output image
-        Image.file(
-          File(imagePath),
+        Image.memory(
+          widget.image,
           fit: BoxFit.cover,
-        )
-            .box
-            .height(CustomMediaQuery.makeHeight(context, .3))
-            .width(context.screenWidth)
-            .make(),
+        ).box.height(CustomMediaQuery.makeHeight(context, .3)).make(),
 
         // list of detected texts
-        ListView(
+        ListView.builder(
           shrinkWrap: true,
-          children: const [
-            TextIntentWidget(
-                text: 'Angad38.agcs@gmail.com', textType: TextType.plainText)
-          ],
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: _textIntents.length,
+          itemBuilder: ((context, index) => _textIntents[index]),
         )
       ]),
 
       //
     );
   }
+
+  // generate list of TextIntent
+  void _generateTextIntents() => {
+        widget.categorizedTexts.forEach((key, value) {
+          _textIntents.add(TextIntentWidget(text: key, textType: value));
+        }),
+        setState(() {})
+      };
 }
