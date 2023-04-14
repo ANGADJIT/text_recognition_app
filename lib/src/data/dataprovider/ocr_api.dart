@@ -40,11 +40,14 @@ class OcrAPI extends BaseApi {
     };
 
     try {
-      final Response response =
-          await get(route: 'get_image/$imageKey', headers: headers);
+      final Response response = await get(
+          route: 'get_image/$imageKey',
+          headers: headers,
+          responseType: ResponseType.bytes);
 
-      final encoded = utf8.encode(response.data);
-      image = Uint8List.fromList(encoded);
+      final bytes = response.data;
+
+      image = Uint8List.fromList(bytes);
     } catch (e) {
       throw ServerException(errorMessage: e.toString());
     }

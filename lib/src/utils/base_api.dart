@@ -19,10 +19,13 @@ class BaseApi {
 
   @protected
   Future<Response> get(
-      {required String route, required Map<String, dynamic> headers}) async {
+      {required String route,
+      required Map<String, dynamic> headers,
+      ResponseType responseType = ResponseType.json}) async {
     _dio.options.headers = headers;
 
-    return await _dio.get(route);
+    return await _dio.get(route,
+        options: Options(responseType: responseType));
   }
 
   @protected

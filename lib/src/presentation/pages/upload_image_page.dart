@@ -113,6 +113,10 @@ class _UploadImagePageState extends State<UploadImagePage> {
             }
           });
         } else if (_ocrCubit.state is OcrError) {
+          final error =
+              (_ocrCubit.state as OcrError).serverException.errorMessage;
+
+          print(error);
           VxToast.show(context,
               msg: (_ocrCubit.state as OcrError).serverException.toString());
         }
