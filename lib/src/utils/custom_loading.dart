@@ -5,6 +5,7 @@ import 'colors.dart';
 class CustomLoading {
   // making it singleton
 
+  // ignore: unused_field
   static final CustomLoading _instance = CustomLoading._init();
 
   static OverlayEntry? _overlayEntry;

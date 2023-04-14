@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:text_recognition_app/src/data/dataprovider/ocr_api.dart';
 import 'package:text_recognition_app/src/logic/ocr_cubit/ocr_cubit.dart';
 import 'package:text_recognition_app/src/presentation/pages/detected_texts_page.dart';
 import 'package:text_recognition_app/src/presentation/widgets/custom_app_bar.dart';
@@ -113,12 +112,8 @@ class _UploadImagePageState extends State<UploadImagePage> {
             }
           });
         } else if (_ocrCubit.state is OcrError) {
-          final error =
-              (_ocrCubit.state as OcrError).serverException.errorMessage;
-
-          print(error);
           VxToast.show(context,
-              msg: (_ocrCubit.state as OcrError).serverException.toString());
+              msg: (_ocrCubit.state as OcrError).serverException.errorMessage);
         }
 
         CustomLoading.dismiss();

@@ -35,6 +35,7 @@ class TextIntentWidget extends StatelessWidget {
   //
   FaIcon _assignIcon() {
     if (textType == TextType.email) {
+      // ignore: deprecated_member_use
       return FaIcon(FontAwesomeIcons.mailBulk, color: purple);
     } else if (textType == TextType.number) {
       return FaIcon(FontAwesomeIcons.phone, color: blue);

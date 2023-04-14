@@ -4,6 +4,7 @@ import 'package:velocity_x/velocity_x.dart';
 class CustomMediaQuery {
   // making it singelton
 
+  // ignore: unused_field
   final CustomMediaQuery _instance = CustomMediaQuery._init();
 
   CustomMediaQuery._init();
