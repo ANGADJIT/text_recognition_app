@@ -1,6 +1,10 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+// ignore: depend_on_referenced_packages
+import 'package:http_parser/http_parser.dart';
+
 import 'cache_manager.dart';
 
 class BaseApi {
@@ -16,10 +20,13 @@ class BaseApi {
 
   @protected
   Future<Response> get(
-      {required String route, required Map<String, dynamic> headers}) async {
+      {required String route,
+      required Map<String, dynamic> headers,
+      ResponseType responseType = ResponseType.json}) async {
     _dio.options.headers = headers;
 
-    return await _dio.get(route);
+    return await _dio.get(route,
+        options: Options(responseType: responseType));
   }
 
   @protected
@@ -33,7 +40,9 @@ class BaseApi {
     FormData? formData;
 
     if (file != null) {
-      data!['file'] = await MultipartFile.fromFile(file.path);
+      final String fileName = file.path.split('/').last;
+      data!['image'] = await MultipartFile.fromFile(file.path,
+          filename: fileName, contentType: MediaType('image', 'jpeg'));
 
       formData = FormData.fromMap(data);
     }
